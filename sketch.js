@@ -6,7 +6,7 @@ const Constraint = Matter.Constraint;
 var engine, world;
 var box1, pig1;
 var backgroundImg, platform;
-
+var gameState;
 var chain;
 
 function preload() {
@@ -40,6 +40,7 @@ function setup() {
     bird = new Bird(200, 50);
 
     chain = new SlingShot(bird.body, { x: 200, y: 50 });
+    gameState = "onSling";
 
 }
 
@@ -68,17 +69,20 @@ function draw() {
 }
 
 function mouseDragged() {
-    // bird.body.position.x = mouseX;
-    // bird.body.position.y = mouseY;
-    Matter.Body.setPosition(bird.body, { x: mouseX, y: mouseY });
+    if (gameState !== "launched") {
+        // bird.body.position.x = mouseX;
+        // bird.body.position.y = mouseY;
+        Matter.Body.setPosition(bird.body, { x: mouseX, y: mouseY });
+    }
 }
 
 function mouseReleased() {
     chain.fly();
+    gameState = "launched";
 }
 
 function keyPressed() {
     if (keyCode === 32) {
-        chain.attach(bird.body);
+        // chain.attach(bird.body);
     }
 }
